@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo</title>
+  <!-- Alpine Plugins -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Alpine Core -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <!-- tailwind -->
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: '#da373d',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<style>
+    .orm {
+  width: 615px;
+  margin: 0 auto;
+  padding: 55px;
+  background-color: #e8e8e8;
+  border-radius: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="email"],
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: none;
+}
+
+.sub {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sub:hover {
+  background-color: #3e8e41;
+}
+.res{
+    display: flex;
+    gap: 96px;
+    margin-top: 23px;
+}
+  </style>
+  
+<body>
+  
+    
+      <h1 style="
+      margin-left: 456px;
+      color: green;
+      font-size: xxx-large;
+  ">Todo Application</h1>
+      <div class="orm" x-data="
+      { 
+         tasks:$persist([]),
+         message:'',
+         add_item(){
+           this.tasks.push(
+             {
+               task:this.message,
+               complete:false
+             }
+           );
+           this.message='';
+
+         },
+         
+         
+      }" >
+
+        
+
+        <!-- FORM -->
+        <form  @submit.prevent>
+          <input type="text" required  x-model="message" placeholder="Enter the Task">
+          <button class="sub" @click="add_item">Add</button>
+        </form>
+
+        
+        
+        <template x-for="item in tasks">
+          
+        <div x-data="{com:[]}" class="res">
+            <input type="checkbox" class="form-checkbox accent-green-500 h-6 w-6" value="complete" x-model="com">
+            <p x-text="item.task" style="font-size: xx-large; margin-top: -13px;"></p>
+            <p @click="tasks.splice(tasks.indexOf(item),1)" style="font-size: xx-large;
+            margin-top: -12px; color: red;">&#10007;</p>
+            <p x-text="com" style="    color: red;
+            font-size: x-large;
+            margin-top: -6px;"></p>
+          </div>
+        </template>
+        
+            
+          <span>Total Tasks:</span> <span x-text="tasks.length"></span>
+    
+    
+      </div>
+  
+
+</body>
+
+</html>
